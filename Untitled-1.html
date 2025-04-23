@@ -1,170 +1,208 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bookstore</title>
   <style>
-
     body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
+      padding: 0;
     }
-
-    nav {
-      background-color: #111827;
-      padding: 1rem;
-      text-align: left;
-    }
-
-    nav h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 600;
+    header {
+      background-color: #121b1d;
       color: white;
+      padding: 12px 24px;
+      font-size: 16px;
     }
-
     main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      max-width: 1120px;
+      margin: 24px auto;
+      padding: 0 16px;
     }
-
     form {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 12px;
+      margin-bottom: 16px;
     }
-
     input[type="text"] {
-      flex: 1;
-      min-width: 200px;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
+      flex: 1 1 300px;
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline-offset: 2px;
+      outline-color: transparent;
+      transition: outline-color 0.2s ease;
     }
-
+    input[type="text"]:focus {
+      outline-color: #2563eb;
+    }
     button {
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
+      font-size: 14px;
+      padding: 6px 14px;
+      border-radius: 4px;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s ease;
+      white-space: nowrap;
     }
-
-    .search {
+    button[type="submit"] {
       background-color: #2563eb;
       color: white;
     }
-
-    .search:hover {
-      background-color: #1d4ed8;
+    button[type="submit"]:hover {
+      background-color: #1e40af;
     }
-
-    .new-book {
-      background-color: #16a34a;
+    button[type="button"] {
+      background-color: #047857;
       color: white;
     }
-
-    .new-book:hover {
-      background-color: #15803d;
+    button[type="button"]:hover {
+      background-color: #065f46;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 14px;
     }
-
-    th, td {
-      padding: 0.75rem;
+    thead th {
       text-align: left;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #d1d5db;
+      font-weight: 600;
+      padding: 8px 12px;
     }
-
-    thead {
+    tbody tr:nth-child(odd) {
       background-color: #f3f4f6;
     }
-    .actions button {
-      background: none;
-      border: 1px solid;
-      padding: 0.3rem 0.6rem;
-      margin-right: 0.3rem;
+    tbody td {
+      padding: 8px 12px;
+      vertical-align: middle;
+    }
+    tbody td.actions {
+      text-align: right;
+      white-space: nowrap;
+    }
+    button.details {
+      color: #3b82f6;
+      border: 1px solid #93c5fd;
+      background: transparent;
+      padding: 2px 8px;
       border-radius: 4px;
-      font-size: 0.8rem;
+      margin-left: 4px;
     }
-  
-    .details {
-      color: #2563eb;
-      border-color: #2563eb;
+    button.details:hover {
+      background-color: #dbeafe;
     }
-
-    .details:hover {
-      background-color: #eff6ff;
+    button.update {
+      color: #fbbf24;
+      border: 1px solid #fde68a;
+      background: transparent;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
     }
-
-    .update {
-      color: #d97706;
-      border-color: #d97706;
-    }
-
-    .update:hover {
+    button.update:hover {
       background-color: #fef3c7;
     }
-
-    .delete {
-      color: #dc2626;
-      border-color: #dc2626;
+    button.delete {
+      color: #f87171;
+      border: 1px solid #fecaca;
+      background: transparent;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
     }
-
-    .delete:hover {
+    button.delete:hover {
       background-color: #fee2e2;
     }
-
+    hr {
+      border: none;
+      border-top: 1px solid #d1d5db;
+      margin: 32px 0;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 24px;
+      font-size: 14px;
+      user-select: none;
+      flex-wrap: wrap;
+    }
+    .pagination button {
+      border: 1px solid #d1d5db;
+      background: white;
+      color: #4b5563;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      min-width: 32px;
+      text-align: center;
+    }
+    .pagination button:hover:not(:disabled) {
+      background-color: #f3f4f6;
+    }
+    .pagination button[disabled] {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .pagination button.active {
+      background-color: #1d4ed8;
+      color: white;
+      border-color: #1d4ed8;
+      cursor: default;
+    }
+    p.results-info {
+      font-size: 10px;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 8px;
+    }
     @media (max-width: 640px) {
       form {
         flex-direction: column;
       }
-      button.search,
-      button.new-book {
+      input[type="text"] {
+        flex: 1 1 auto;
         width: 100%;
       }
+      table {
+        font-size: 12px;
+      }
+      thead th, tbody td {
+        padding: 6px 8px;
+      }
+      .pagination {
+        font-size: 12px;
+      }
+      .pagination button {
+        min-width: 28px;
+        padding: 4px 8px;
+      }
     }
-    .pagination {
-      margin-top: 12px;
-      font-size: 0.875rem;
-      color: #6b7280;
-      text-align: right;
-      font-weight: 500;
-    }
-  
   </style>
 </head>
 <body>
-  <nav>
-    <h1>Bookstore</h1>
-  </nav>
+  <header>Bookstore</header>
   <main>
     <form>
-      <input type="text" placeholder="Search books">
-      <button type="submit" class="search">Search</button>
-      <button type="button" class="new-book">New Book</button>
+      <input type="text" placeholder="Search books" />
+      <button type="submit">Search</button>
+      <button type="button" class="newbook" onclick="location.href='newbook.html'">New Book</button>
     </form>
+
     <table>
       <thead>
         <tr>
-          <th>ID</th>
+          <th style="width: 40px;">ID</th>
           <th>Title</th>
           <th>Author</th>
-            </tr>
+          <th style="width: 160px;"></th>
+        </tr>
       </thead>
       <tbody>
         <tr>
@@ -178,9 +216,229 @@
           </td>
         </tr>
         <tr>
-            <td>4</td>
-            <td>Sapiens</td>
-            <td>Yuval Noah Harari</td>
+          <td>2</td>
+          <td>Ullam beatae sed distinctio repellat voluptatum ut.</td>
+          <td>Jaylen Hayes</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Eius totam nisi quod earum in.</td>
+          <td>Dr. Jabari Streich IV</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Ex aut voluptatem dolorem.</td>
+          <td>Russel Wisoky</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Consequuntur tempore sunt qui quasi eos aspernatur sint.</td>
+          <td>Nolan Langosh Jr.</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Voluptas aut tempora molestiae delectus ipsum architecto et.</td>
+          <td>Dashawn Ratke</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Doloribus facilis exercitationem expedita a est provident repudiandae.</td>
+          <td>Pansy Beer</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Et reiciendis in distinctio.</td>
+          <td>Alysha Schimmel</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Eum id quia sed nostrum doloremque.</td>
+          <td>Prof. Mario Koss</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Libero est minus error impedit ad consequuntur et vero.</td>
+          <td>Marisol Kuphal</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Enim voluptatem voluptatem ut quaerat rerum autem.</td>
+          <td>Miss Mozell Keeling Sr.</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">12</td>
+          <td>Et impedit eligendi molestias.</td>
+          <td>Mr. Chaz DuBaque Jr.</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">13</td>
+          <td>Officiis magni quis veniam sint.</td>
+          <td>Dr. Berenice Emard I</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">14</td>
+          <td>Dolorum sunt consequatur qui in quo et.</td>
+          <td>Peyton Wiza</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">15</td>
+          <td>Nemo expedita beatae voluptates et rerum minima in culpa.</td>
+          <td>Vince Koepp</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">16</td>
+          <td>Quis minus unde ducimus enim exercitationem soluta sit.</td>
+          <td>Arvel Hayes III</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">17</td>
+          <td>Vero placeat quis ipsum.</td>
+          <td>Prof. Clement Greenfelder</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">18</td>
+          <td>Dicta velit sequi asperiores culpa.</td>
+          <td>Tia Witting</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">19</td>
+          <td>Eum earum dolorum architecto aperiam et quas.</td>
+          <td>Daisy Rutherford IV</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">20</td>
+          <td>Et sunt quaerat numquam.</td>
+          <td>Sherwood Wilkinson</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">21</td>
+          <td>Et facere provident optio reiciendis veniam.</td>
+          <td>Derek Pouros</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">22</td>
+          <td>Impedít et officia autem quia delectus reiciendis vero.</td>
+          <td>Malachi Beer</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40px;">23</td>
+          <td>Iure omnis magnam non vitae autem deserunt.</td>
+          <td>Dr. Stephon Russel Sr.</td>
+          <td class="actions">
+            <button class="details">Details</button>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+            <td style="width: 40px;">24</td>
+            <td> Alphonse Daudet.</td>
+            <td>Shapo.</td>
             <td class="actions">
               <button class="details">Details</button>
               <button class="update">Update</button>
@@ -188,9 +446,9 @@
             </td>
           </tr>
           <tr>
-            <td>5</td>
-            <td>1984</td>
-            <td>George Orwell</td>
+            <td style="width: 40px;">25</td>
+            <td>Mikhail Sholokhov.</td>
+            <td>Podnyataya tselina.</td>
             <td class="actions">
               <button class="details">Details</button>
               <button class="update">Update</button>
@@ -198,9 +456,9 @@
             </td>
           </tr>
           <tr>
-            <td>6</td>
-            <td>The Great Gatsby</td>
-            <td>F. Scott Fitzgerald</td>
+            <td style="width: 40px;">26</td>
+            <td>Bertolt Brecht.</td>
+            <td>Md Munjurul.</td>
             <td class="actions">
               <button class="details">Details</button>
               <button class="update">Update</button>
@@ -208,15 +466,35 @@
             </td>
           </tr>
           <tr>
-            <td>7</td>
-            <td>Atomic Habits</td>
-            <td>James Clear</td>
+            <td style="width: 40px;">27</td>
+            <td>In 2024 Bangladesh.</td>
+            <td>Md Munna.</td>
             <td class="actions">
               <button class="details">Details</button>
               <button class="update">Update</button>
               <button class="delete">Delete</button>
             </td>
           </tr>
-      </main>
+      </tbody>
+    </table>
+
+    <div class="pagination" role="navigation" aria-label="Pagination Navigation">
+      <button disabled aria-label="Previous page">‹</button>
+      <button class="active" aria-current="page">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>10</button>
+      <button>...</button>
+      <button>20</button>
+      <button>21</button>
+      <button aria-label="Next page">›</button>
+    </div>
+  </main>
 </body>
 </html>
